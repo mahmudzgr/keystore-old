@@ -9,17 +9,20 @@ var upChar = lowChar.toUpperCase();
 var num = "0123456789";
 var characters = ".,/?!;'[]{}()*&^%$#@`~<>|";
 
- var randPass = function (){
-	var select = Math.floor(Math.random()*20);
-	if(select>=0 && select<8){
-		return lowChar[Math.floor(Math.random()*lowChar.length)];
-	}else if(select>=8 && select<16){
-		return upChar[Math.floor(Math.random()*upChar.length)];
-	}else if(select>=16 && select <19){
-		return num[Math.floor(Math.random()*num.length)];
-	}else{
-		return characters[Math.floor(Math.random()*characters.length)];
-	}
+ var randPass = function (chars,digits){
+
+ 	var odds =  "";
+ 	for(var i=0; i<8; i++){odds += '0'};
+ 	for(var i=0; i<8; i++){odds += '1'};
+ 	if(digits === "true"){for(var i=0; i<3; i++){odds += '2'}}
+ 	if(chars === "true"){for(var i=0; i<1; i++){odds += '3'}}
+
+	var select = Math.floor(Math.random()*odds.length);
+
+	if(odds[select]==='0'){return lowChar[Math.floor(Math.random()*lowChar.length)];
+	}else if(odds[select]==='1'){return upChar[Math.floor(Math.random()*upChar.length)];
+	}else if(odds[select]==='2'){return num[Math.floor(Math.random()*num.length)];
+	}else{ return characters[Math.floor(Math.random()*characters.length)];}
 };
 
 
@@ -35,12 +38,25 @@ app.get('/akg', function (req, res) {
 
 app.get("/mahmud",(req, res) =>{
 	++users;
-	var number= [];
 	var pass="";
 	for(var i=0; i< 16 ;i++){
-	pass += randPass();
+	pass += randPass(true,true);
 	}
 	res.end(pass); 
+});
+
+app.get("/api/password", (req,res)=>{
+	
+	++users;
+
+	var length = req.query.length;
+	var chars = req.query.chars;
+	var digits = req.query.digits;
+	var pass="";
+	for(var i=0; i<length; i++){ pass += randPass(chars,digits);}
+
+	res.end(pass);
+
 });
 
 
