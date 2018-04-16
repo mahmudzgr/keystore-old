@@ -40,7 +40,7 @@ app.get("/mahmud",(req, res) =>{
 	for(var i=0; i< 16 ;i++){
 	pass += randPass();
 	}
-	res.end(pass);
+	res.end(pass); 
 });
 
 
