@@ -11,11 +11,11 @@ var characters = ".,/?!;'[]{}()*&^%$#@`~<>|";
 
  var randPass = function (){
 	var select = Math.floor(Math.random()*20);
-	if(select>=0 && select<7){
+	if(select>=0 && select<8){
 		return lowChar[Math.floor(Math.random()*lowChar.length)];
-	}else if(select>=7 && select<14){
+	}else if(select>=8 && select<16){
 		return upChar[Math.floor(Math.random()*upChar.length)];
-	}else if(select>=14 && select <18){
+	}else if(select>=16 && select <19){
 		return num[Math.floor(Math.random()*num.length)];
 	}else{
 		return characters[Math.floor(Math.random()*characters.length)];
