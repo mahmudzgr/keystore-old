@@ -55,6 +55,7 @@ app.get("/api/password", (req,res)=>{
 	var pass="";
 	for(var i=0; i<length; i++){ pass += randPass(chars,digits);}
 
+	res.type('text');
 	res.end(pass);
 
 });
