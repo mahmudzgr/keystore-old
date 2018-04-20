@@ -4,10 +4,10 @@ const path = require('path');
 
 var users = 0;
 //var array1 = ['a', 'b' ,'c', 'd', 'e', 'f', 'g' , 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-var lowChar = "abcdefghijklmnopqrstvwxyz";
-var upChar = lowChar.toUpperCase();
+var lowLetter = "abcdefghijklmnopqrstvwxyz";
+var upLetter = lowLetter.toUpperCase();
 var num = "0123456789";
-var characters = ".,/?!;'[]{}()*&^%$#@`~<>|";
+var specials = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
 
 /*
@@ -45,22 +45,22 @@ class Password{
 */
 
 
- var randPass = function (digits,chars){
-
- 	var odds =  "";
-	for(var i=0; i<8; i++){odds += '0'};
-	for(var i=0; i<8; i++){odds += '1'}; // Can we remevo this recurring code somehow?
 
 
- 	if(digits === "on"){for(var i=0; i<3; i++){odds += '2'}}
- 	if(chars === "on"){for(var i=0; i<1; i++){odds += '3'}}
+ var randPass = function (digits,special){
 
-	var select = Math.floor(Math.random()*odds.length);
+	var select= 0.8;
 
-	if(odds[select]==='0'){return lowChar[Math.floor(Math.random()*lowChar.length)];
-	}else if(odds[select]==='1'){return upChar[Math.floor(Math.random()*upChar.length)];
-	}else if(odds[select]==='2'){return num[Math.floor(Math.random()*num.length)];
-	}else{ return characters[Math.floor(Math.random()*characters.length)];}
+ 	if(digits === "on"){select += 0.15;}
+ 	if(special === "on"){select += 0.05;}
+
+
+	var random = Math.random()*select;
+
+	if(random < .4){return lowLetter[Math.floor(Math.random()*lowLetter.length)];
+	}else if(random < .8){return upLetter[Math.floor(Math.random()*upLetter.length)];
+	}else if(random < .95){return num[Math.floor(Math.random()*num.length)];
+	}else{ return specials[Math.floor(Math.random()*specials.length)];}
 };
 
 
@@ -89,9 +89,9 @@ app.get("/api/password", (req,res)=>{
 
 	var length = req.query.length;
 	var digits = req.query.digits;
-	var chars = req.query.chars;
+	var special = req.query.chars;
 	var pass="";
-	for(var i=0; i<length; i++){ pass += randPass(digits,chars);}
+	for(var i=0; i<length; i++){ pass += randPass(digits,special);}
 
 	//const new_password = new Password(length,chars,digits);
 
