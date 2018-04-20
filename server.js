@@ -85,18 +85,29 @@ app.get("/mahmud",(req, res) =>{
 
 app.get("/api/password", (req,res)=>{
 	
-	++users;
-
 	var length = req.query.length;
 	var digits = req.query.digits;
 	var special = req.query.chars;
-	var pass="";
-	for(var i=0; i<length; i++){ pass += randPass(digits,special);}
 
-	//const new_password = new Password(length,chars,digits);
+	if(length<4){
+		res.type('text');
+		res.status(500);
+		res.end("Password has to composed of at least 4 characters!" );
+	}else{
 
-	res.type('text');
-	res.end(pass);
+		++users;
+
+		var pass="";
+		for(var i=0; i<length; i++){ pass += randPass(digits,special);}
+
+		res.type('text');
+		res.end(pass);
+	}
+
+
+		//const new_password = new Password(length,chars,digits);
+
+
 
 });
 
