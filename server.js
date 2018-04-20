@@ -92,7 +92,7 @@ app.get("/api/password", (req,res)=>{
 	if(length<4){
 		res.type('text');
 		res.status(500);
-		res.end("Password has to composed of at least 4 characters!" );
+		res.end("Password has to composed of at least 4 characters!");
 	}else{
 
 		++users;
